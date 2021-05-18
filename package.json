@@ -1,0 +1,7 @@
+{
+	"name": "deckski",
+	"version": "0.1.0",
+	"main": "index.js",
+	"repository": "https://github.com/mjnrock/deckski.git",
+	"author": "Matt Nawrocki <mjnrock@umich.edu>"
+}
