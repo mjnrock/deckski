@@ -1,8 +1,5 @@
 body {
-	@apply bg-gray-500;
-}
-#root {
-	@apply min-h-screen;
+	@apply bg-gray-300;
 }
 
 @tailwind utilities;
