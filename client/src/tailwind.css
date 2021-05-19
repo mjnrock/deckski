@@ -1,7 +1,19 @@
 body {
-	@apply bg-gray-100;
+	@apply bg-gray-300;
 }
 
+@tailwind utilities;
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+
+@layer components {
+	.btn {
+		@apply inline-block px-5 py-3 text-sm font-semibold tracking-wider text-white uppercase bg-indigo-500 rounded-lg focus:outline-none focus:ring focus:ring-offset-2 focus:ring-indigo-500 focus:ring-opacity-50 active:bg-indigo-600 hover:bg-indigo-400 sm:text-base;
+	}
+	.btn-primary {
+		@apply hover:-translate-y-0.5 transform transition shadow-lg;
+	}
+	.btn-secondary {
+		@apply text-gray-800 bg-gray-300 hover:bg-gray-200 focus:ring-gray-300 active:bg-gray-400;
+	}
+}
