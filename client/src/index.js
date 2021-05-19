@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "tailwindcss/tailwind.css";
-import "./index.tailwind.css";
+import "./tailwind.css";
 
 import App from "./App";
 
