@@ -15,7 +15,8 @@ console.clear();
 console.warn("------------ NEW EXECUTION CONTEXT ------------");
 
 const app = express();
-const port = 3001;
+const httpport = 3000;
+const wsport = 3001;
 
 const wss = WSS.QuickSetup(expressWs(app), {
 	[ WSS.Signal.CONNECTION ]: (msg, { broadcast }) => {
@@ -92,7 +93,7 @@ const mainnet = new Agency.Event.Network({}, {
 });
 
 wss.addListener(mainnet, { addToDefaultGlobal: "wss" });
-mongonet.addListener(mainnet, { addToDefaultGlobal: "mainnet" });
+mongonet.addListener(mainnet, { addToDefaultGlobal: "mongonet" });
 
 /**
  * This is a newer way to do the work commonly seen with `bodyParser`
@@ -133,13 +134,14 @@ app.get("/", function(req, res, next){
 /**
  * Start the server
  */
-app.listen(port, () => {
-    console.log(`WebSocket server is listening on port ${ port }!`);
-    
+app.listen(wsport, () => {
+    console.log(`WebSocket server is listening on port ${ wsport }!`);    
     
     lookup(hostname(), (err, ip) => {
-        QRCode.Generator.toString(`http://${ ip }:${ 3000 }`, { type: "terminal" }).then(data => {
-            console.log(`Link to:   http://${ ip }:${ 3000 }`);
+		const url = `http://${ ip }:${ httpport }`;
+
+        QRCode.Generator.toString(url, { type: "terminal" }).then(data => {
+            console.log(`Link to:   ${ url }`);
             console.log(data);
         });
     });

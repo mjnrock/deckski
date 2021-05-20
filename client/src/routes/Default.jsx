@@ -69,6 +69,10 @@ export function Default() {
 		updateEvents(e);
 	};
 
+	function onEvent(e) {		
+		updateEvents(e);
+	};
+
     return (
 		<>
 			{/* <button
@@ -97,14 +101,16 @@ export function Default() {
 					onMouseDown={ onMouseDown }
 					onMouseUp={ onMouseUp }
 					onContextMenu={ onContextMenu }
-					// // onMouseMove={ onMouseMove }
-					// // onMouseCancel={ onMouseCancel }
-					// // onMouseEnter={ onMouseEnter }
-					// // onMouseLeave={ onMouseLeave }
+					// onMouseMove={ onMouseMove }
+					// onMouseCancel={ onMouseCancel }
+					// onMouseEnter={ onMouseEnter }
+					// onMouseLeave={ onMouseLeave }
 					// onDragStart={ onDragStart }
 					// onDragEnd={ onDragEnd }
-					// onClick={ onClick }
-					// onDoubleClick={ onDoubleClick }
+					onClick={ onClick }
+					onDoubleClick={ onDoubleClick }
+					onTouchStart={ onEvent }
+					onTouchEnd={ onEvent }
 					// onGotMouseCapture={ onGotMouseCapture }
 					// onLostMouseCapture={ onLostMouseCapture }
 				>
