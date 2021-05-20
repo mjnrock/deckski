@@ -1,0 +1,1 @@
+const mainnet = new Agency.Event.Network();

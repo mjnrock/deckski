@@ -18,8 +18,10 @@ const app = express();
 const port = 3001;
 
 const wss = WSS.QuickSetup(expressWs(app), {
-    // handlers
-}, { state: [] });
+	[ WSS.Signal.CONNECTION ]: (msg, { broadcast }) => {
+		broadcast("bounce", Date.now());
+	},
+});
 
 const mongonet = new Agency.Event.Network({}, {
 	default: {
@@ -84,31 +86,13 @@ const mongonet = new Agency.Event.Network({}, {
 });
 
 const mainnet = new Agency.Event.Network({}, {
-    default: {
-        [ Agency.Event.Network.Signal.UPDATE ]: function(msg, { wss }) {
-            wss.sendToAll("update", wss.state);
-        },
-		upsert(msg, { wss }) {
-
-		},
-        click(msg, { wss, network, broadcast }) {
-            wss.state = [
-                ...wss.state,
-                msg.data,
-            ];
-			
-			broadcast("player", Date.now());
-        },
-    },
+	default: {
+		"*": (msg) => console.log(`[Pre]:`, msg.type, msg.data),
+	},
 });
-// wss.addConnection(mainnet, { addToDefaultGlobal: "wss" });
-// mainnet.addConnection(mongonet, { addToDefaultGlobal: "mainnet" });
-// wss.addConnection(mainnet, { addSelfToDefaultGlobal: "wss" });
-// mainnet.addConnection(mongonet, { addSelfToDefaultGlobal: "mainnet" });
-// mainnet.join(wss, { addSelfToDefaultGlobal: "wss" });
-// mongonet.join(mainnet, { addSelfToDefaultGlobal: "mainnet" });
-mainnet.join(wss, { addToDefaultGlobal: "wss" });
-mongonet.join(mainnet, { addToDefaultGlobal: "mainnet" });
+
+wss.addListener(mainnet, { addToDefaultGlobal: "wss" });
+mongonet.addListener(mainnet, { addToDefaultGlobal: "mainnet" });
 
 /**
  * This is a newer way to do the work commonly seen with `bodyParser`

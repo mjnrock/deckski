@@ -5,15 +5,18 @@
 	"license": "NONE",
 	"dependencies": {
 		"@craco/craco": "^6.1.2",
-		"@lespantsfancy/agency": "0.7.31",
+		"@lespantsfancy/agency": "0.7.34",
 		"@testing-library/jest-dom": "^5.11.4",
 		"@testing-library/react": "^11.1.0",
 		"@testing-library/user-event": "^12.1.10",
 		"flatted": "^3.1.1",
+		"isomorphic-ws": "^4.0.1",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"react-scripts": "4.0.3",
-		"web-vitals": "^1.0.1"
+		"web-vitals": "^1.0.1",
+        "react-router-dom": "^5.2.0",
+        "uuid": "^8.3.2"
 	},
 	"scripts": {
 		"start": "craco start",

@@ -1,132 +1,70 @@
-import { useState } from "react";
-// import Agency from "@lespantsfancy/agency";
+import React from "react";
+import Agency from "@lespantsfancy/agency";
+import WS from "@lespantsfancy/agency/lib/modules/websocket/Client";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-// const mainnet = new Agency.Event.Network();
+import Routes from "./routes/package";
 
-export function App() {
-	const [ lastEvent, setLastEvent ] = useState(0);
-	const [ events, setEvents ] = useState([]);
+export const Context = React.createContext();
 
-	function updateEvents(e) {
-		const now = Date.now();
+const ws = WS.QuickSetup({
+    connect: true,
 
-		if(now - lastEvent > 1000) {
-			setLastEvent(now);
-			setEvents([ e ]);
-		} else {
-			setEvents([
-				...events,
-				e,
-			]);
-		}
-	}
+    // url: `ws://localhost:3001`,
+    protocol: `ws`,
+    host: `localhost`,
+    port: 3001,
+});
 
-	function onPointerDown(e) {
-		console.log("NOW")
-		updateEvents(e);
+const mainnet = new Agency.Event.Network({}, {
+    default: {
+		"*": (msg) => console.log(`[Pre]:`, msg.type, msg.data),
+        event: function(msg, { ws }) {
+			const [ e ] = msg.data;
+
+            ws.sendToServer("event", eventPacker(e));
+        },
+        update: function(msg, { network }) {
+            const [ state ] = msg.data;
+            
+            network.state = {
+                ...network.state,
+                history: state,
+            };
+        },
+    },
+});
+ws.addListener(mainnet, { addToDefaultGlobal: "ws" });
+
+
+export function eventPacker(e) {
+	switch(e.type) {
+		default:
+			return {
+				type: e.type,
+				x: e.clientX,
+				y: e.clientY,
+				timeStamp: Date.now(),
+			}
 	};
-	function onPointerUp(e) {		
-		updateEvents(e);
-	};
-	function onPointerMove(e) {
-		updateEvents(e);
-	};
-	function onPointerCancel(e) {
-		updateEvents(e);
-	};
-	function onPointerEnter(e) {
-		updateEvents(e);
-	};
-	function onPointerLeave(e) {
-		updateEvents(e);
-	};
-	function onDragStart(e) {
-		updateEvents(e);
-	};
-	function onDragEnd(e) {
-		updateEvents(e);
-	};
-	function onClick(e) {
-		updateEvents(e);
-	};
-	function onDoubleClick(e) {		
-		updateEvents(e);
-	};
-	function onContextMenu(e) {
-		e.preventDefault();
-		
-		updateEvents(e);
-	};
-	
+};
+
+// const listener = mainnet.addListener();
+// console.log(listener)
+
+
+export function App() {		
 	return (
-		<div className="grid grid-cols-1 m-10 bg-gray-300">
-			<div
-				className="min-h-screen bg-gray-400 border border-gray-900 ring"
-				onPointerDown={ onPointerDown }
-				onPointerUp={ onPointerUp }
-				onContextMenu={ onContextMenu }
-				// onPointerMove={ onPointerMove }
-				// onPointerCancel={ onPointerCancel }
-				// onPointerEnter={ onPointerEnter }
-				// onPointerLeave={ onPointerLeave }
-				onDragStart={ onDragStart }
-				onDragEnd={ onDragEnd }
-				onClick={ onClick }
-				onDoubleClick={ onDoubleClick }
-			>
-				{
-					events.length ? (				
-						events.map(e => {
-							return (
-								<div class="grid gap-4 grid-cols-6 mt-24 text-center">
-									{						
-										Object.entries(e).map(([ k, v ]) => {
-											if(typeof v === "object" || typeof v === "function") {
-												return null;
-											}
-											
-											return (
-												<div key={ k } className="border border-gray-600">
-													<div className="font-bold">{ k }</div>
-													<div>{ v.toString() }</div>
-												</div>
-											);
-										})
-									}
-								</div>
-							);
-						})
-					) : null
-				}
-			</div>
-		</div>
+        <Context.Provider value={{ network: mainnet }}>
+            <Router>
+                <Switch>
+                    <Route path={ `/` }>
+                        <Routes.Default />
+                    </Route>
+                </Switch>
+            </Router>
+        </Context.Provider>
 	);
 };
 
 export default App;
-
-
-// {
-// 	events.length ? (				
-// 		events.map(e => {
-// 			return (
-// 				<div class="grid gap-4 grid-cols-6 mt-24 text-center">
-// 					{						
-// 						Object.entries(e).map(([ k, v ]) => {
-// 							if(typeof v === "object" || typeof v === "function") {
-// 								return null;
-// 							}
-							
-// 							return (
-// 								<div key={ k } className="border border-gray-600">
-// 									<div className="font-bold">{ k }</div>
-// 									<div>{ v.toString() }</div>
-// 								</div>
-// 							);
-// 						})
-// 					}
-// 				</div>
-// 			);
-// 		})
-// 	) : null
-// }
