@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Routes from "./routes/package";
 
-import InputNetwork, { MergeInputObjects } from "./lib/InputNetwork";
+import InputNetwork from "./lib/InputNetwork";
 import InputMouse from "./lib/InputMouse";
 import InputTouch from "./lib/InputTouch";
 
@@ -20,19 +20,12 @@ const ws = WS.QuickSetup({
     port: 3001,
 });
 
-const inputnet = InputNetwork(window, MergeInputObjects(InputMouse, InputTouch), {
-	modify: {
-		default: {
-			"**": (msg, { broadcast }) => {
-				broadcast(msg);
-			},
-		},
-	},
-});
+const inputnet = InputNetwork.QuickSetup(window, [ InputMouse, InputTouch ]);
 
 const mainnet = new Agency.Event.Network({}, {
     default: {
 		// "*": (msg) => console.log(`[Pre]:`, msg.type, msg.data),
+		[ InputMouse.Signal.CLICK ]: (msg) => console.log(`[CLICK]:`, msg.type, msg.data),
         event: function(msg, { ws }) {
 			const [ e ] = msg.data;
 
