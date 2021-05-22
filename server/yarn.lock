@@ -2,16 +2,15 @@
 # yarn lockfile v1
 
 
-"@lespantsfancy/agency@0.7.35":
-  version "0.7.35"
-  resolved "https://registry.yarnpkg.com/@lespantsfancy/agency/-/agency-0.7.35.tgz#a520fe3bc8edb4a74d12f121fd662a5056b3f750"
-  integrity sha512-IZXb/cYddzgxw4sbGtvbluMSq6yZ0W4pHDuzFsuNav2XC3EzKuuhpaWjEHrrICT7CT2DRS5K5ETM54468pIY2Q==
+"@lespantsfancy/agency@0.7.37":
+  version "0.7.37"
+  resolved "https://registry.yarnpkg.com/@lespantsfancy/agency/-/agency-0.7.37.tgz#24466b5d2157b6563c38df7186341c25949b36e6"
+  integrity sha512-JnYuEbIWlASAVMGgmA8KK+7V4OIYPyqFiych1cmJCexlWxQHwW5WKk/ms5zAor5qvJ5/t9XhNy1SsluivvW/6w==
   dependencies:
     esm "^3.2.25"
     is-base64 "^1.1.0"
     mainloop.js "^1.0.4"
     node-fetch "^2.6.1"
-    object-hash "^2.1.1"
     uuid "^8.3.2"
 
 accepts@~1.3.7:
@@ -458,11 +457,6 @@ node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
-
-object-hash@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-2.1.1.tgz#9447d0279b4fcf80cff3259bf66a1dc73afabe09"
-  integrity sha512-VOJmgmS+7wvXf8CjbQmimtCnEx3IAoLxI3fp2fbWehxrWBcAQFbk+vcwb6vzR0VZv/eNCJ/27j151ZTwqW/JeQ==
 
 on-finished@~2.3.0:
   version "2.3.0"
