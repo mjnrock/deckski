@@ -9,24 +9,6 @@ import InputNetwork from "./lib/InputNetwork";
 import InputMouse from "./lib/InputMouse";
 import InputTouch from "./lib/InputTouch";
 
-import Deckski from "./lib/deck/package";
-
-const cd = new Deckski.Deck();
-const cc = new Deckski.CardCollection();
-for(let i = 0; i < 10; i++) {
-	cc.add(new Deckski.Card({
-		state: {
-			Number: i,
-		},
-	}));
-}
-
-console.log(cc)
-console.log(cd)
-cc.addToDeck(cd)
-console.log(cc)
-console.log(cd)
-
 export const Context = React.createContext();
 
 const ws = WS.QuickSetup({
